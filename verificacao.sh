@@ -1,8 +1,7 @@
 #!/bin/bash
-
 URL="http://127.0.0.1"
 PORTA=80
-DISCORD_WEBHOOK="https://discord"
+DISCORD_WEBHOOK="https://discord.com/api/webhooks/1404938519079555234/3cX4lVAWM797KJ9v4YUar5GSNOXnnw_M4hDxn3k92ajjRfnk2vRf8ml--jDYSv2SLxzo"
 LOG_FILE="/usr/local/bin/verificacao.log"
 SERVICO="nginx"
 
@@ -43,13 +42,16 @@ tentar_reiniciar() {
 }
 
 DATA=$(date '+%Y-%m-%d %H:%M:%S')
+ULTIMA_LINHA=$(tail -n 1 "$LOG_FILE" 2>/dev/null)
 
 if verificar_site; then
-    # Está online — envia mensagem de online UMA vez, aqui dentro da mesma execução.
-    enviar_alerta "$DATA - Site está ONLINE."
+    if [[ "$ULTIMA_LINHA" == *"OFFLINE"* ]]; then
+        enviar_alerta "$DATA - Site está ONLINE."
+    fi
 else
-    # Está offline — envia mensagem toda vez
-    enviar_alerta "$DATA - Site está OFFLINE."
+    if [[ "$ULTIMA_LINHA" != *"OFFLINE"* ]]; then
+        enviar_alerta "$DATA - Site está OFFLINE."
+    fi
     tentar_reiniciar
 fi
 
