@@ -1,7 +1,7 @@
 #!/bin/bash
-URL="http://127.0.0.1"
+URL="http://localhost"
 PORTA=80
-DISCORD_WEBHOOK="https://discord.com/api/webhooks/1404938519079555234/3cX4lVAWM797KJ9v4YUar5GSNOXnnw_M4hDxn3k92ajjRfnk2vRf8ml--jDYSv2SLxzo"
+DISCORD_WEBHOOK="https://discord"
 LOG_FILE="/usr/local/bin/verificacao.log"
 SERVICO="nginx"
 
